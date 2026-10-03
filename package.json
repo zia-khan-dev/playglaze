@@ -1,0 +1,41 @@
+{
+  "name": "playglaze",
+  "version": "0.1.0",
+  "description": "Glossy, chunky game UI for React Native and the web, drawn in code in any color.",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "react-native": "src/index.ts",
+  "types": "src/index.ts",
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "react-native",
+    "react-native-web",
+    "game",
+    "ui",
+    "components",
+    "casual-game",
+    "buttons"
+  ],
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.77",
+    "react-native-svg": ">=15"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "react": "^19.2.3",
+    "react-native": "^0.87.1",
+    "react-native-svg": "^15.15.5",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "docs": "cd docs && npm run dev",
+    "docs:build": "cd docs && npm install && npm run build"
+  }
+}
