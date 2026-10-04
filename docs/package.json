@@ -2,12 +2,21 @@
   "name": "playglaze-docs",
   "private": true,
   "type": "module",
-  "scripts": { "dev": "vite", "build": "vite build", "preview": "vite preview" },
+  "scripts": {
+    "dev": "vite build && vite preview --port 5173 --open",
+    "watch": "vite build --watch",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-native-web": "latest",
     "react-native-svg": "^15.15.5"
   },
-  "devDependencies": { "vite": "latest", "@vitejs/plugin-react": "latest", "typescript": "^5.9.0" }
+  "devDependencies": {
+    "vite": "latest",
+    "@vitejs/plugin-react": "latest",
+    "typescript": "^5.9.0"
+  }
 }

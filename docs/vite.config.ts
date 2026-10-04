@@ -14,7 +14,7 @@ export default defineConfig({
       // react-native-svg imports the native asset registry for <Image>; the docs never use it.
       { find: '@react-native/assets-registry/registry', replacement: path.resolve(import.meta.dirname, 'src/assets-registry-stub.ts') },
       { find: /^react-native$/, replacement: nm('react-native-web') },
-      { find: /^react-native-svg$/, replacement: nm('react-native-svg') },
+      { find: /^react-native-svg$/, replacement: nm('react-native-svg/lib/module/ReactNativeSVG.web.js') },
       { find: /^react$/, replacement: nm('react') },
       { find: /^react\/(.*)$/, replacement: nm('react') + '/$1' },
       { find: /^react-dom$/, replacement: nm('react-dom') },
