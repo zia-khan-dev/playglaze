@@ -68,6 +68,7 @@ export default function App() {
           {wide ? <T size={13} color={C.faint} weight="700">v0.1.0</T> : null}
           <View style={{ flex: 1 }} />
           <Pressable onPress={() => go('installation')}><T weight="800" color={C.dim}>Docs</T></Pressable>
+          <Pressable onPress={() => go('tpl-home')}><T weight="800" color={C.dim}>Templates</T></Pressable>
           <Pressable onPress={() => (globalThis as any).open?.('https://github.com/zia-khan-dev/playglaze', '_blank')}><T weight="800" color={C.dim}>GitHub</T></Pressable>
         </View>
 

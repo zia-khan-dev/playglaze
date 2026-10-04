@@ -10,3 +10,6 @@ export * from './Ribbon';
 export * from './Panel';
 export * from './controls';
 export * from './game';
+export * from './Popup';
+export * from './Tabs';
+export * from './extras';

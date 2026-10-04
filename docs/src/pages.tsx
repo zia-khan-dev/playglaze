@@ -6,6 +6,9 @@ import {
   Panel, ProgressBar, Ribbon, RoundButton, ShopTile, Slider, Star, Stars, ThemeProvider, Toggle, ColorName,
 } from '../../src';
 import { ApiTable, C, Code, CodeBlock, Demo, DemoCard, H2, PageHead, Prop, Row, T } from './ui';
+import { MORE_PAGES } from './pages2';
+import { TEMPLATE_PAGES } from './templates';
+import { RESOURCE_PAGES } from './resources';
 
 export type Page = { slug: string; name: string; group: string; title?: string; intro: React.ReactNode; import?: string; demos?: Demo[]; api?: { title?: string; rows: Prop[] }[]; body?: () => React.ReactElement };
 
@@ -51,7 +54,7 @@ const Swatch = ({ name, hex }: { name: string; hex: string }) => (
   </View>
 );
 
-export const PAGES: Page[] = [
+const BASE: Page[] = [
   // ---------------- Getting started ----------------
   {
     slug: 'introduction', name: 'Introduction', group: 'Getting started', title: 'PlayGlaze',
@@ -204,7 +207,7 @@ export const PAGES: Page[] = [
     ] }],
   },
   {
-    slug: 'icon', name: 'Icon', group: 'General',
+    slug: 'icon', name: 'Icon', group: 'Data display',
     intro: 'Twenty common game icons, drawn as SVG, white with a soft shade under them by default.',
     import: "import { Icon } from 'playglaze';",
     demos: [
@@ -224,7 +227,7 @@ export const PAGES: Page[] = [
     ] }],
   },
   {
-    slug: 'label', name: 'Label', group: 'General',
+    slug: 'label', name: 'Label', group: 'Data display',
     intro: 'Bold game text: white with a thick darker edge under it, in the theme’s display font.',
     import: "import { Label } from 'playglaze';",
     demos: [
@@ -451,6 +454,10 @@ export const PAGES: Page[] = [
     ] }],
   },
 ];
+
+const ORDER = ['Getting started', 'General', 'Layout', 'Navigation', 'Data entry', 'Data display', 'Feedback', 'Game', 'Templates', 'Resources'];
+const ALL = [...BASE, ...MORE_PAGES, ...TEMPLATE_PAGES, ...RESOURCE_PAGES];
+export const PAGES: Page[] = ORDER.flatMap(g => ALL.filter(p => p.group === g));
 
 export function PageView({ page }: { page: Page }) {
   return (
