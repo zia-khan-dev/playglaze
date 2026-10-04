@@ -34,16 +34,17 @@ export const bright: Theme = {
 };
 
 export const dark: Theme = {
+  // Deep jewel tones that glow on a night background (ruby, amber, topaz, sapphire, amethyst, emerald).
   colors: {
-    orange: '#FF8A00', yellow: '#FFD21A', red: '#FF2D55', blue: '#00C2FF',
-    purple: '#8B2CF5', green: '#10C981', pink: '#FF4FB8', gray: '#5A5470',
+    orange: '#FF6A00', yellow: '#FFD000', red: '#FF0055', blue: '#00B4FF',
+    purple: '#7B2CF5', green: '#00D27A', pink: '#E81CFF', gray: '#4A4466',
   },
   primary: 'purple',
-  panel: { rim: '#6D3BD8', face: '#2A1F52', faceTop: '#3A2C6E', line: '#4A3A86' },
-  ribbon: { cookie: '#5A2DB0', filling: '#F59E0B' },
-  slot: { face: '#33276A', rim: '#8B5CF6' },
-  groove: '#120D26',
-  text: { color: '#FFFFFF', shadow: '#1A0B3A', dark: '#EDE7FF' },
+  panel: { rim: '#5B2BD0', face: '#1E1640', faceTop: '#2E2260', line: '#3E2F7A' },
+  ribbon: { cookie: '#3A1A8C', filling: '#FF9F1C' },
+  slot: { face: '#2A2058', rim: '#8B5CF6' },
+  groove: '#0B0718',
+  text: { color: '#FFFFFF', shadow: '#12062E', dark: '#F1EBFF' },
 };
 
 const Ctx = createContext<Theme>(bright);

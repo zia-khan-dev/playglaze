@@ -47,10 +47,10 @@ function SettingsPanelDemo() {
   );
 }
 
-const Swatch = ({ name, hex }: { name: string; hex: string }) => (
+const Swatch = ({ name, hex, ink = C.text, sub = C.faint }: { name: string; hex: string; ink?: string; sub?: string }) => (
   <View style={{ alignItems: 'center', gap: 6, width: 92 }}>
     <View style={{ width: 64, height: 64, borderRadius: 16, backgroundColor: hex, boxShadow: '0 4px 0 rgba(0,0,0,0.35)' }} />
-    <T size={13} weight="800">{name}</T><T size={12} color={C.faint}>{hex}</T>
+    <T size={13} weight="800" color={ink}>{name}</T><T size={12} color={sub}>{hex}</T>
   </View>
 );
 
@@ -99,15 +99,27 @@ const BASE: Page[] = [
     body: () => (
       <View>
         <H2>Bright colors</H2>
-        <Row>{COLORS.map(c => <Swatch key={c} name={c} hex={bright.colors[c]} />)}</Row>
+        <T color={C.dim} style={{ marginBottom: 14 }}>Sunny candy colors for daytime games.</T>
+        <View style={{ backgroundImage: 'linear-gradient(180deg, #BFE9FF 0%, #D9F7C8 100%)', padding: 20, borderRadius: 12 }}>
+          <Row>{COLORS.map(c => <Swatch key={c} name={c} hex={bright.colors[c]} ink="#5A3412" sub="#8A6A4A" />)}</Row>
+          <View style={{ height: 20 }} />
+          <Row>{COLORS.slice(0, 7).map(c => <GlossButton key={c} color={c} width={120} size="md" title={c} />)}</Row>
+        </View>
         <H2>Dark colors</H2>
-        <Row>{COLORS.map(c => <Swatch key={c} name={c} hex={dark.colors[c]} />)}</Row>
+        <T color={C.dim} style={{ marginBottom: 14 }}>Deeper jewel tones made to glow on a night background.</T>
+        <View style={{ backgroundColor: '#100A24', padding: 20, borderRadius: 12 }}>
+          <Row>{COLORS.map(c => <Swatch key={c} name={c} hex={dark.colors[c]} />)}</Row>
+          <View style={{ height: 20 }} />
+          <ThemeProvider theme={{ ...dark, displayFont: 'Lilita One' }}>
+            <Row>{COLORS.slice(0, 7).map(c => <GlossButton key={c} color={c} width={120} size="md" title={c} />)}</Row>
+          </ThemeProvider>
+        </View>
         <H2>Any hex</H2>
         <T color={C.dim}>Every <Code>color</Code> prop also takes a hex such as <Code>#14B8A6</Code>. PlayGlaze builds the light, face, dark and lip shades from it.</T>
         <View style={{ height: 16 }} />
         <Row><GlossButton width={150} color="#14B8A6" title="#14B8A6" /><GlossButton width={150} color="#E11D48" title="#E11D48" /><GlossButton width={150} color="#6366F1" title="#6366F1" /></Row>
         <H2>Dark theme</H2>
-        <View style={{ backgroundColor: '#140F2A', padding: 28, borderRadius: 12 }}>
+        <View style={{ backgroundColor: '#100A24', padding: 28, borderRadius: 12 }}>
           <ThemeProvider theme={{ ...dark, displayFont: 'Lilita One' }}>
             <Row gap={24}>
               <Panel title="Pause" style={{ width: 260 }}><GlossButton size="md"><Icon name="play" size={28} /></GlossButton></Panel>
