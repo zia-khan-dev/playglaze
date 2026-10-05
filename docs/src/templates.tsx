@@ -1,6 +1,6 @@
 // Ready-made game screens built only from PlayGlaze components. Copy the code and swap in your art.
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import {
   Avatar, Badge, BoosterSlot, Coin, CounterPill, DailyRewardDay, GlossButton, Hearts, Icon, Label, LeaderboardRow,
   LevelSlot, Panel, ProgressBar, QuestCard, Ribbon, RoundButton, Segmented, ShopTile, Slider, Stars, Tabs, Toggle,
@@ -10,11 +10,16 @@ import { CodeBlock, H2, Row, T, C } from './ui';
 
 /** A phone-sized stage with a sky-to-grass background standing in for the game art. */
 export function Phone({ children, bg = 'linear-gradient(180deg, #7DD3FC 0%, #A7F3D0 60%, #4ADE80 100%)' }: { children: React.ReactNode; bg?: string }) {
+  // shrink the 360-wide phone on small screens (page padding is 16 on each side)
+  const { width } = useWindowDimensions();
+  const scale = Math.min(1, (width - 32) / 360);
   return (
-    <View style={{
+    <View style={{ width: 360 * scale, height: 700 * scale }}>
+    <View style={{ transform: [{ scale }], transformOrigin: 'top left',
       width: 360, height: 700, borderRadius: 36, overflow: 'hidden', borderWidth: 8, borderColor: '#111017',
       backgroundImage: bg, boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
-    }}>{children}</View>
+    } as any}>{children}</View>
+    </View>
   );
 }
 

@@ -101,13 +101,13 @@ export default function App() {
           {!wide ? (
             <Pressable onPress={() => setMenuOpen(o => !o)} style={{ padding: 8 }}><Text style={{ color: C.text, fontSize: 22 }}>☰</Text></Pressable>
           ) : null}
-          <Pressable onPress={() => go('introduction')}><Ribbon width={150} height={42} title="PlayGlaze" tilt={-2} /></Pressable>
+          <Pressable onPress={() => go('introduction')}><Ribbon width={wide ? 150 : 132} height={wide ? 42 : 38} title="PlayGlaze" tilt={-2} /></Pressable>
           {wide ? <T size={13} color={C.faint} weight="700">v0.5.0</T> : null}
           <View style={{ flex: 1 }} />
           <Select options={SKIN_OPTIONS} value={skin} onChange={setSkin} width={wide ? 170 : 130} height={38} maxRows={12} />
           <RoundButton icon={mode === 'dark' ? 'sun' : 'moon'} size={38} color={mode === 'dark' ? 'yellow' : 'purple'} onPress={flipMode} />
-          <Pressable onPress={() => go('installation')}><T weight="800" color={C.dim}>Docs</T></Pressable>
-          <Pressable onPress={() => go('tpl-home')}><T weight="800" color={C.dim}>Templates</T></Pressable>
+          {wide ? <Pressable onPress={() => go('installation')}><T weight="800" color={C.dim}>Docs</T></Pressable> : null}
+          {wide ? <Pressable onPress={() => go('tpl-home')}><T weight="800" color={C.dim}>Templates</T></Pressable> : null}
           <Pressable onPress={() => (globalThis as any).open?.('https://github.com/zia-khan-dev/playglaze', '_blank')}><T weight="800" color={C.dim}>GitHub</T></Pressable>
         </View>
 
