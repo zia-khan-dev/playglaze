@@ -1,6 +1,51 @@
+# dependencies
 node_modules/
+.pnp
+.pnp.js
+.yarn/
+
+# builds
 dist/
-.vercel/
-.DS_Store
+build/
 lib/
+*.tsbuildinfo
+.vite/
+
+# environment and secrets (never commit keys)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# deploy tools
+.vercel/
+.netlify/
+.wrangler/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# test and coverage
+coverage/
+.nyc_output/
+
+# editors and OS files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# temp
+tmp/
+.cache/
+
+# private notes (pricing and licensing plan)
 SKINS-PLAN.md
