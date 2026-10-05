@@ -50,6 +50,16 @@ Colors: `orange`, `yellow`, `red`, `blue`, `purple`, `green`, `pink`, `gray`, or
 
 The docs also include **11 ready-made screens**: Home, Game HUD, Level select, Pause, Level complete, Level failed, Daily reward, Shop, Quests, Leaderboard and Settings.
 
+## CLI: pull a Studio project
+
+Design your colors in **PlayGlaze Studio**, then get the theme, ready-made screens and PNG assets into your game:
+
+```sh
+npx playglaze login            # paste your token from Studio → Export → CLI
+npx playglaze pull <project>   # writes ./playglaze/theme.ts, screens/ and assets/
+npx playglaze pull             # later: update the same project
+```
+
 ## Docs site
 
 The showcase in `docs/` runs the same components through react-native-web (Vite).

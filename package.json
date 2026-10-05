@@ -26,9 +26,13 @@
   "types": "lib/index.d.ts",
   "react-native": "src/index.ts",
   "source": "src/index.ts",
+  "bin": {
+    "playglaze": "cli/playglaze.mjs"
+  },
   "files": [
     "lib",
     "src",
+    "cli",
     "README.md",
     "LICENSE"
   ],
