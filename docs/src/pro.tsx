@@ -57,6 +57,8 @@ const SCREENS = [
     code: `<LevelCompleteScreen level={12} stars={3} score={8450} coins={120} onNext={next} onReplay={replay} onDouble={watchAd} />` },
 ];
 
+export const PRO_DEMOS: { name: string; Demo: () => React.ReactElement }[] = !P ? [] : SCREENS.map(s => ({ name: s.name, Demo: s.Demo }));
+
 export const PRO_PAGES: Page[] = !P ? [] : SCREENS.map(s => ({
   slug: s.slug, name: s.name, group: 'Pro', title: `${s.name} (Pro)`, intro: s.intro,
   body: () => (
