@@ -9,7 +9,7 @@ import type { Page } from './pages';
 import { CodeBlock, H2, Row, T, C } from './ui';
 
 /** A phone-sized stage with a sky-to-grass background standing in for the game art. */
-function Phone({ children, bg = 'linear-gradient(180deg, #7DD3FC 0%, #A7F3D0 60%, #4ADE80 100%)' }: { children: React.ReactNode; bg?: string }) {
+export function Phone({ children, bg = 'linear-gradient(180deg, #7DD3FC 0%, #A7F3D0 60%, #4ADE80 100%)' }: { children: React.ReactNode; bg?: string }) {
   return (
     <View style={{
       width: 360, height: 700, borderRadius: 36, overflow: 'hidden', borderWidth: 8, borderColor: '#111017',

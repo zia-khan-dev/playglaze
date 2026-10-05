@@ -1,6 +1,9 @@
 // PlayGlaze — glossy, chunky game UI for React Native, drawn in code.
 export * from './color';
 export * from './theme';
+export * from './skin';
+export * from './skins';
+export * from './Surface';
 export * from './Icon';
 export { Label, Stripes, Gloss } from './parts';
 export type { LabelProps } from './parts';
@@ -13,3 +16,5 @@ export * from './game';
 export * from './Popup';
 export * from './Tabs';
 export * from './extras';
+export * from './Select';
+export { Texture } from './Texture';

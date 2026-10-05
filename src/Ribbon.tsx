@@ -5,6 +5,7 @@ import Svg, { Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 import { darken, lighten } from './color';
 import { Label } from './parts';
 import { useTheme } from './theme';
+import { useSkin } from './skin';
 
 /** A rectangle with round bumps along every edge, drawn clockwise. */
 export function scallopPath(x: number, y: number, w: number, h: number, bump: number) {
@@ -35,13 +36,22 @@ export type RibbonProps = {
 
 export function Ribbon({ width, height = 56, title, children, color, filling, tilt = -2, style }: RibbonProps) {
   const t = useTheme();
+  const { skin } = useSkin();
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const cookie = color ?? t.ribbon.cookie;
   const fill = filling ?? t.ribbon.filling;
   const bump = height * 0.13;
   const pad = bump;
   const W = width, H = height + height * 0.12;
-  const body = scallopPath(pad, pad, W - pad * 2, height - pad * 2, bump);
+  const bw = W - pad * 2, bh = height - pad * 2;
+  const shape = skin.plate ?? 'cookie';
+  const rr = Math.min(bh / 2, bh * 0.5 * skin.radius);
+  const notch = bh * 0.35;
+  const body = shape === 'plate'
+    ? `M ${pad + rr} ${pad} H ${pad + bw - rr} A ${rr} ${rr} 0 0 1 ${pad + bw} ${pad + rr} V ${pad + bh - rr} A ${rr} ${rr} 0 0 1 ${pad + bw - rr} ${pad + bh} H ${pad + rr} A ${rr} ${rr} 0 0 1 ${pad} ${pad + bh - rr} V ${pad + rr} A ${rr} ${rr} 0 0 1 ${pad + rr} ${pad} Z`
+    : shape === 'banner'
+      ? `M ${pad} ${pad} H ${pad + bw} L ${pad + bw - notch} ${pad + bh / 2} L ${pad + bw} ${pad + bh} H ${pad} L ${pad + notch} ${pad + bh / 2} Z`
+      : scallopPath(pad, pad, bw, bh, bump);
   return (
     <View style={[{ width: W, height: H, transform: [{ rotate: `${tilt}deg` }] }, style]}>
       <Svg width={W} height={H} style={{ position: 'absolute' }}>
@@ -56,11 +66,14 @@ export function Ribbon({ width, height = 56, title, children, color, filling, ti
           </LinearGradient>
         </Defs>
         {/* shadow, filling, cookie, top shine */}
-        <Path d={body} fill="rgba(0,0,0,0.28)" transform={`translate(0 ${height * 0.17})`} />
-        <Path d={body} fill={`url(#pgFill${uid})`} transform={`translate(${height * 0.05} ${height * 0.1})`} />
-        <Path d={body} fill={`url(#pgCookie${uid})`} stroke={darken(cookie, 0.25)} strokeWidth={1.2} />
-        <Rect x={pad * 2.2} y={pad * 1.5} width={W - pad * 4.4} height={(height - pad * 2) * 0.3} rx={(height - pad * 2) * 0.15}
-          fill="rgba(255,255,255,0.13)" />
+        {skin.drop !== 'none' ? <Path d={body} fill="rgba(0,0,0,0.28)" transform={`translate(0 ${height * 0.17})`} /> : null}
+        <Path d={body} fill={skin.gradient ? `url(#pgFill${uid})` : fill} transform={`translate(${height * 0.05} ${height * 0.1})`} />
+        <Path d={body} fill={skin.gradient ? `url(#pgCookie${uid})` : cookie}
+          stroke={skin.outline ? skin.ink : darken(cookie, 0.25)} strokeWidth={1.2 + skin.outline} />
+        {skin.gloss ? (
+          <Rect x={pad * 2.2} y={pad * 1.5} width={W - pad * 4.4} height={(height - pad * 2) * 0.3} rx={(height - pad * 2) * 0.15}
+            fill={`rgba(255,255,255,${0.13 * skin.gloss})`} />
+        ) : null}
       </Svg>
       <View style={{ position: 'absolute', left: pad * 2, right: pad * 2, top: 0, height, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 8 }}>
         {title ? <Label size={height * 0.42} color="#F4FAFF" edge={darken(cookie, 0.45)}>{title}</Label> : null}

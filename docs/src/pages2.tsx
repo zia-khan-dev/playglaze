@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import {
   Avatar, Badge, BoosterSlot, Coin, DailyRewardDay, GlossButton, Hearts, Icon, Label, LeaderboardRow, Popup,
-  ProgressRing, QuestCard, RewardPop, RoundButton, Segmented, Tabs, TextField,
+  ProgressRing, QuestCard, RewardPop, RoundButton, Segmented, Select, Tabs, TextField,
 } from '../../src';
 import type { Page } from './pages';
 import { Row, T, C } from './ui';
@@ -37,6 +37,20 @@ function TabsDemo() {
     </View>
   );
 }
+const SIZES = [
+  { value: 'easy', label: 'Easy', group: 'Normal' }, { value: 'medium', label: 'Medium', group: 'Normal' },
+  { value: 'hard', label: 'Hard', group: 'Challenge', badge: 'x1.5' }, { value: 'super', label: 'Super hard', group: 'Challenge', badge: 'x2' },
+];
+function SelectDemo() {
+  const [a, setA] = useState('medium'), [b, setB] = useState<string>();
+  return (
+    <View style={{ height: 300, flexDirection: 'row', gap: 18, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+      <Select options={SIZES} value={a} onChange={setA} width={220} />
+      <Select options={SIZES} value={b} onChange={setB} placeholder="Difficulty" color="blue" width={220} />
+    </View>
+  );
+}
+
 function SegDemo() {
   const [a, setA] = useState('one'), [b, setB] = useState('week');
   return (
@@ -93,6 +107,24 @@ export const MORE_PAGES: Page[] = [
       ['onChange', 'Called with the tapped key.', '(key: string) => void'],
       ['color', 'Color of the chosen option.', colorType, 'theme.primary'],
       ['height', 'Height.', 'number', '40'],
+      STYLE,
+    ] }],
+  },
+  {
+    slug: 'select', name: 'Select', group: 'Data entry',
+    intro: 'A select box: a rimmed field showing the chosen option, opening a list under it. Options can be grouped and tagged. The docs use it to pick a skin.',
+    import: "import { Select } from 'playglaze';",
+    demos: [{ title: 'Grouped options with tags', render: () => <SelectDemo />,
+      code: `<Select\n  options={[\n    { value: 'easy', label: 'Easy', group: 'Normal' },\n    { value: 'hard', label: 'Hard', group: 'Challenge', badge: 'x1.5' },\n  ]}\n  value={level}\n  onChange={setLevel}\n  width={220}\n/>` }],
+    api: [{ rows: [
+      ['options', 'The choices; same group values are listed under one heading.', '{ value: string; label: string; group?: string; badge?: string }[]'],
+      ['value', 'The chosen value.', 'string'],
+      ['onChange', 'Called with the picked value.', '(value: string) => void'],
+      ['placeholder', 'Shown when nothing is chosen.', 'string', "'Select'"],
+      ['color', 'Rim color.', colorType, 'theme.primary'],
+      ['width', 'Width.', 'number', '200'],
+      ['height', 'Height of the field.', 'number', '44'],
+      ['maxRows', 'Rows shown before the list scrolls.', 'number', '8'],
       STYLE,
     ] }],
   },

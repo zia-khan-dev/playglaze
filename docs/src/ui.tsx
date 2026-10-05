@@ -2,10 +2,20 @@
 import React, { useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 
-export const C = {
+const DARK = {
   bg: '#24232B', side: '#1D1C23', card: '#2E2D37', cardLine: '#3C3A47', preview: '#34333E',
   text: '#ECE8F5', dim: '#A9A4BB', faint: '#7E7993', accent: '#FFB648', cream: '#FFE9C2', code: '#17161C',
+  line: '#34323F', chip: '#3A3846', zebra: '#292830', type: '#9CD3FF', hover: 'rgba(255,255,255,0.04)',
 };
+const LIGHT: typeof DARK = {
+  bg: '#F6F4FA', side: '#FFFFFF', card: '#FFFFFF', cardLine: '#E4E0EC', preview: '#EFECF5',
+  text: '#24232B', dim: '#5E5A6E', faint: '#8A859C', accent: '#C76A00', cream: '#3A2A10', code: '#17161C',
+  line: '#E4E0EC', chip: '#EFEAF6', zebra: '#F8F6FB', type: '#1D6FB8', hover: 'rgba(0,0,0,0.04)',
+};
+/** Docs colors. Mutated in place by setMode, then the app re-renders from the top. */
+export const C = { ...DARK };
+export type Mode = 'dark' | 'light';
+export const setMode = (m: Mode) => Object.assign(C, m === 'light' ? LIGHT : DARK);
 export const FONT = 'Nunito';
 export const DISPLAY = 'Lilita One';
 export const MONO = 'ui-monospace, SFMono-Regular, Menlo, monospace';
@@ -15,7 +25,7 @@ export const T = ({ children, size = 15, color = C.text, weight = '500', style }
 }) => <Text style={[{ fontFamily: FONT, fontSize: size, color, fontWeight: weight, lineHeight: size * 1.55 }, style]}>{children}</Text>;
 
 export const Code = ({ children }: { children: React.ReactNode }) => (
-  <Text style={{ fontFamily: MONO, fontSize: 13, color: C.accent, backgroundColor: '#3A3846', paddingHorizontal: 5, borderRadius: 4 }}>{children}</Text>
+  <Text style={{ fontFamily: MONO, fontSize: 13, color: C.accent, backgroundColor: C.chip, paddingHorizontal: 5, borderRadius: 4 }}>{children}</Text>
 );
 
 export function PageHead({ title, intro, importLine }: { title: string; intro: React.ReactNode; importLine?: string }) {
@@ -86,10 +96,10 @@ export function ApiTable({ title, rows }: { title?: string; rows: Prop[] }) {
           ))}
         </View>
         {rows.map(([name, desc, type, def], i) => (
-          <View key={name} style={{ flexDirection: 'row', borderTopWidth: 1, borderTopColor: C.cardLine, backgroundColor: i % 2 ? '#292830' : 'transparent' }}>
+          <View key={name} style={{ flexDirection: 'row', borderTopWidth: 1, borderTopColor: C.cardLine, backgroundColor: i % 2 ? C.zebra : 'transparent' }}>
             <View style={[cell, { flex: 1.1 }]}><Text style={{ fontFamily: MONO, fontSize: 13, color: C.accent }}>{name}</Text></View>
             <View style={[cell, { flex: 2.4 }]}><T size={14}>{desc}</T></View>
-            <View style={[cell, { flex: 1.6 }]}><Text style={{ fontFamily: MONO, fontSize: 12.5, color: '#9CD3FF' }}>{type}</Text></View>
+            <View style={[cell, { flex: 1.6 }]}><Text style={{ fontFamily: MONO, fontSize: 12.5, color: C.type }}>{type}</Text></View>
             <View style={[cell, { flex: 0.9 }]}><Text style={{ fontFamily: MONO, fontSize: 12.5, color: C.dim }}>{def ?? '—'}</Text></View>
           </View>
         ))}

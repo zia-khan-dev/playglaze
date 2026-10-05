@@ -8,6 +8,7 @@ import { Icon, ICONS } from './Icon';
 import { Label } from './parts';
 import { RoundButton } from './RoundButton';
 import { ColorProp, useTheme, useTone } from './theme';
+import { shadows, useSkin } from './skin';
 
 const STAR = 'M12 1.6l3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 17.8l-6.4 3.5 1.4-7.2-5.3-5 7.2-.9z';
 
@@ -58,22 +59,23 @@ export function LevelSlot({ level, stars = 0, state = 'open', size = 88, color, 
   const tone = useTone(color ?? t.slot.rim);
   const locked = state === 'locked';
   const rim = locked ? '#C9C2B4' : tone.base;
-  const r = size * 0.24;
+  const sk = useSkin();
+  const r = sk.r(size * 0.24);
   return (
     <Pressable disabled={locked} {...press} style={[{ width: size, height: size * 1.06 }, style]}>
       {({ pressed }) => (
         <View style={{ flex: 1, transform: [{ scale: pressed ? 0.95 : 1 }] }}>
           <View style={{
             width: size, height: size, borderRadius: r, padding: size * 0.06,
-            backgroundImage: `linear-gradient(180deg, ${lighten(rim, 0.25)} 0%, ${rim} 100%)`,
-            boxShadow: `0 ${size * 0.05}px 0 ${darken(rim, 0.3)}, 0 ${size * 0.08}px ${size * 0.1}px ${rgba('#000000', 0.25)}${state === 'current' ? `, 0 0 0 3px ${rgba('#ffffff', 0.9)}` : ''}`,
+            ...sk.paint(`linear-gradient(180deg, ${lighten(rim, 0.25)} 0%, ${rim} 100%)`, rim),
+            boxShadow: shadows(sk.lip(size * 0.05, darken(rim, 0.3)), sk.drop(size * 0.08, size * 0.1, 0.25), sk.line(0, ''), state === 'current' && `0 0 0 3px ${rgba('#ffffff', 0.9)}`),
           }}>
             <View style={{
               flex: 1, borderRadius: r * 0.75, alignItems: 'center', justifyContent: 'center',
-              backgroundImage: locked
-                ? 'linear-gradient(180deg, #F3EFE6 0%, #E2DBCC 100%)'
-                : `linear-gradient(180deg, ${t.panel.faceTop} 0%, ${t.slot.face} 100%)`,
-              boxShadow: `inset 0 2px 4px ${rgba(darken(rim, 0.4), 0.3)}`,
+              ...(locked
+                ? sk.paint('linear-gradient(180deg, #F3EFE6 0%, #E2DBCC 100%)', '#E9E3D6')
+                : sk.paint(`linear-gradient(180deg, ${t.panel.faceTop} 0%, ${t.slot.face} 100%)`, t.slot.face)),
+              boxShadow: shadows(sk.well(2, 4, darken(rim, 0.4), 0.3), sk.line(0, '')),
             }}>
               {locked ? (
                 <View style={{
@@ -111,11 +113,12 @@ export function CounterPill({ value, icon, onAdd, width = 130, style }: {
 }) {
   const t = useTheme();
   const h = 34;
+  const sk = useSkin();
   return (
     <View style={[{ width, height: h + 8, justifyContent: 'center' }, style]}>
       <View style={{
-        height: h, borderRadius: h / 2, backgroundColor: rgba(t.groove, 0.92), paddingLeft: h + 2, paddingRight: onAdd ? h : 10,
-        justifyContent: 'center', boxShadow: `inset 0 2px 3px ${rgba('#000000', 0.5)}, 0 1px 0 ${rgba('#ffffff', 0.3)}`,
+        height: h, borderRadius: sk.r(h / 2), backgroundColor: rgba(t.groove, 0.92), paddingLeft: h + 2, paddingRight: onAdd ? h : 10,
+        justifyContent: 'center', boxShadow: shadows(sk.well(2, 3, '#000000', 0.5), sk.glint(1, 0.3), sk.line(0, '')),
       }}>
         <Label size={17} edge={rgba('#000000', 0.45)}>{value}</Label>
       </View>
@@ -153,16 +156,17 @@ export function ShopTile({ children, price, priceIcon, onBuy, color = 'purple', 
 }) {
   const t = useTheme();
   const rim = darken(t.panel.rim, 0.05);
+  const sk = useSkin();
   return (
     <View style={[{ width, alignItems: 'center' }, style]}>
       <View style={{
-        width, height: width * 1.12, borderRadius: width * 0.16, padding: 4,
-        backgroundImage: `linear-gradient(180deg, ${lighten(rim, 0.15)} 0%, ${rim} 100%)`,
-        boxShadow: `0 4px 0 ${darken(rim, 0.3)}, 0 6px 10px ${rgba('#000000', 0.25)}`,
+        width, height: width * 1.12, borderRadius: sk.r(width * 0.16), padding: 4,
+        ...sk.paint(`linear-gradient(180deg, ${lighten(rim, 0.15)} 0%, ${rim} 100%)`, rim),
+        boxShadow: shadows(sk.lip(4, darken(rim, 0.3)), sk.drop(6, 10, 0.25), sk.line(0, '')),
       }}>
         <View style={{
-          flex: 1, borderRadius: width * 0.13, alignItems: 'center', justifyContent: 'center', paddingBottom: 18,
-          backgroundImage: `radial-gradient(circle at 50% 40%, #FFFFFF 0%, ${t.panel.faceTop} 50%, ${t.slot.face} 100%)`,
+          flex: 1, borderRadius: sk.r(width * 0.13), alignItems: 'center', justifyContent: 'center', paddingBottom: 18,
+          ...sk.paint(`radial-gradient(circle at 50% 40%, #FFFFFF 0%, ${t.panel.faceTop} 50%, ${t.slot.face} 100%)`, t.panel.faceTop),
         }}>
           {children}
         </View>

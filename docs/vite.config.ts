@@ -13,6 +13,8 @@ export default defineConfig({
     alias: [
       // react-native-svg imports the native asset registry for <Image>; the docs never use it.
       { find: '@react-native/assets-registry/registry', replacement: path.resolve(import.meta.dirname, 'src/assets-registry-stub.ts') },
+      // Lets the optional local playglaze-pro folder import the library source.
+      { find: /^playglaze$/, replacement: path.resolve(import.meta.dirname, '../src/index.ts') },
       { find: /^react-native$/, replacement: nm('react-native-web') },
       { find: /^react-native-svg$/, replacement: nm('react-native-svg/lib/module/ReactNativeSVG.web.js') },
       { find: /^react$/, replacement: nm('react') },

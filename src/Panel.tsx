@@ -5,6 +5,8 @@ import { darken, lighten, rgba } from './color';
 import { Ribbon } from './Ribbon';
 import { CloseButton } from './RoundButton';
 import { useTheme } from './theme';
+import { shadows, useSkin } from './skin';
+import { Texture } from './Texture';
 
 export type PanelProps = {
   children?: React.ReactNode;
@@ -28,21 +30,25 @@ export function Panel({
   children, rim, face, rimWidth = 9, radius = 30, padding = 18, title, titleNode, titleWidth = 190, onClose, style, contentStyle,
 }: PanelProps) {
   const t = useTheme();
+  const sk = useSkin();
+  const rad = sk.r(radius);
   const r = rim ?? t.panel.rim;
   const f = face ?? t.panel.face;
   const hasTitle = !!(title || titleNode);
   return (
     <View style={[{ paddingTop: hasTitle ? 30 : 0 }, style]}>
       <View style={{
-        borderRadius: radius, padding: rimWidth,
-        backgroundImage: `linear-gradient(180deg, ${lighten(r, 0.18)} 0%, ${r} 50%, ${darken(r, 0.12)} 100%)`,
-        boxShadow: `0 6px 0 ${darken(r, 0.35)}, 0 14px 22px ${rgba('#000000', 0.38)}, inset 0 2px 0 ${rgba('#ffffff', 0.45)}, inset 0 0 0 1px ${rgba(darken(r, 0.3), 0.6)}`,
+        borderRadius: rad, padding: rimWidth, overflow: sk.skin.texture ? 'hidden' : undefined,
+        ...sk.paint(`linear-gradient(180deg, ${lighten(r, 0.18)} 0%, ${r} 50%, ${darken(r, 0.12)} 100%)`, r),
+        boxShadow: shadows(sk.lip(6, darken(r, 0.35)), sk.drop(14, 22, 0.38), sk.shine(2, 0.45), sk.line(1, rgba(darken(r, 0.3), 0.6))),
       }}>
+        <Texture name={sk.skin.texture} />
         <View style={[{
-          borderRadius: radius - rimWidth, padding, paddingTop: hasTitle ? padding + 26 : padding,
-          backgroundImage: `linear-gradient(180deg, ${t.panel.faceTop} 0%, ${f} 100%)`,
-          boxShadow: `inset 0 3px 6px ${rgba(darken(r, 0.4), 0.28)}, inset 0 0 0 2px ${rgba(darken(f, 0.1), 0.6)}`,
+          borderRadius: Math.max(0, rad - rimWidth), padding, overflow: sk.skin.faceTexture ? 'hidden' : undefined, paddingTop: hasTitle ? padding + 26 : padding,
+          ...sk.paint(`linear-gradient(180deg, ${t.panel.faceTop} 0%, ${f} 100%)`, f),
+          boxShadow: shadows(sk.well(3, 6, darken(r, 0.4), 0.28), sk.line(2, rgba(darken(f, 0.1), 0.6))),
         }, contentStyle]}>
+          <Texture name={sk.skin.faceTexture} />
           {children}
         </View>
       </View>

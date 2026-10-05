@@ -8,6 +8,7 @@ import {
 import { ApiTable, C, Code, CodeBlock, Demo, DemoCard, H2, PageHead, Prop, Row, T } from './ui';
 import { MORE_PAGES } from './pages2';
 import { TEMPLATE_PAGES } from './templates';
+import { PRO_PAGES } from './pro';
 import { RESOURCE_PAGES } from './resources';
 
 export type Page = { slug: string; name: string; group: string; title?: string; intro: React.ReactNode; import?: string; demos?: Demo[]; api?: { title?: string; rows: Prop[] }[]; body?: () => React.ReactElement };
@@ -467,8 +468,8 @@ const BASE: Page[] = [
   },
 ];
 
-const ORDER = ['Getting started', 'General', 'Layout', 'Navigation', 'Data entry', 'Data display', 'Feedback', 'Game', 'Templates', 'Resources'];
-const ALL = [...BASE, ...MORE_PAGES, ...TEMPLATE_PAGES, ...RESOURCE_PAGES];
+const ORDER = ['Getting started', 'General', 'Layout', 'Navigation', 'Data entry', 'Data display', 'Feedback', 'Game', 'Templates', 'Pro', 'Resources'];
+const ALL = [...BASE, ...MORE_PAGES, ...TEMPLATE_PAGES, ...PRO_PAGES, ...RESOURCE_PAGES];
 export const PAGES: Page[] = ORDER.flatMap(g => ALL.filter(p => p.group === g));
 
 export function PageView({ page }: { page: Page }) {

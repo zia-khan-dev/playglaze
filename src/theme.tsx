@@ -1,6 +1,7 @@
 // Themes: a set of named button colors plus the panel, ribbon and text colors.
 import React, { createContext, useContext, useMemo } from 'react';
 import { tone, Tone } from './color';
+import { Skin, SkinProvider } from './skin';
 
 export type ColorName = 'orange' | 'yellow' | 'red' | 'blue' | 'purple' | 'green' | 'pink' | 'gray';
 /** A named theme color, or any hex like '#22c55e'. */
@@ -49,9 +50,14 @@ export const dark: Theme = {
 
 const Ctx = createContext<Theme>(bright);
 
-export function ThemeProvider({ theme = bright, children }: { theme?: Partial<Theme>; children: React.ReactNode }) {
-  const value = useMemo(() => ({ ...bright, ...theme, colors: { ...bright.colors, ...theme.colors } }) as Theme, [theme]);
-  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+/** Colors come from `theme`, the material and shapes from `skin` (default: the outer skin, or glossy). */
+export function ThemeProvider({ theme, skin, children }: { theme?: Partial<Theme>; skin?: Partial<Skin>; children: React.ReactNode }) {
+  const st = skin?.theme;
+  const value = useMemo(
+    () => ({ ...bright, ...st, ...theme, colors: { ...bright.colors, ...st?.colors, ...theme?.colors } }) as Theme,
+    [theme, st],
+  );
+  return <Ctx.Provider value={value}><SkinProvider skin={skin}>{children}</SkinProvider></Ctx.Provider>;
 }
 
 export const useTheme = () => useContext(Ctx);
