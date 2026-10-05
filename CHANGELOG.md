@@ -21,6 +21,9 @@
 
 - **Skins:** the material and shapes of every component (gradients, gloss, stripes, lips, shadows, outlines, corner radius, label edge) now come from a `Skin`, separate from the theme's colors. `<ThemeProvider theme={...} skin={...}>` or `<SkinProvider>`. `glossy` is the default and looks exactly like 0.1.0.
 - New exports: `Skin`, `glossy`, `SkinProvider`, `useSkin`, `skinKit`, `shadows`, `Surface`. `Gloss` takes an optional `end` alpha.
+## 0.1.1
+
+- **Theme:** the dark theme now has its own deep jewel-tone palette (it was almost the same as the bright one).
 
 ## 0.1.0
 

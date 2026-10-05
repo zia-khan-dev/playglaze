@@ -60,6 +60,8 @@ export const RESOURCE_PAGES: Page[] = [
     intro: 'What changed in each version.',
     body: () => (
       <View>
+        <H2>0.1.1</H2>
+        <T color={C.dim}>•  The dark theme now has its own deep jewel-tone palette.</T>
         <H2>0.1.0</H2>
         <T color={C.dim}>First release.</T>
         <View style={{ height: 8 }} />
