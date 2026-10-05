@@ -95,7 +95,7 @@ function Failed() {
           <View style={{ alignItems: 'center', gap: 14 }}>
             <Hearts count={2} size={34} />
             <Label size={20} color="#8A4A1C" edge="rgba(255,255,255,0.8)">Out of moves</Label>
-            <GlossButton size="md" color="purple"><Icon name="plus" size={26} /><Label size={20}>5</Label><Coin size={24} /><Label size={18}>200</Label></GlossButton>
+            <GlossButton size="md" color="purple" width={232}><Icon name="plus" size={26} /><Label size={20}>5</Label><Coin size={24} /><Label size={18}>200</Label></GlossButton>
             <Row gap={12}>
               <View style={{ width: 110 }}><GlossButton size="md" color="red"><Icon name="close" size={26} /></GlossButton></View>
               <View style={{ width: 110 }}><GlossButton size="md"><Icon name="refresh" size={26} /></GlossButton></View>
