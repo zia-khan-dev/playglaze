@@ -1,6 +1,6 @@
 // A select box: a rimmed field showing the chosen option, opening a list (optionally grouped) under it.
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleProp, View, ViewStyle } from 'react-native';
+import { Pressable, ScrollView, StyleProp, useWindowDimensions, View, ViewStyle } from 'react-native';
 import { darken, rgba } from './color';
 import { Icon } from './Icon';
 import { Label } from './parts';
@@ -31,6 +31,9 @@ export function Select({ options, value, onChange, placeholder = 'Select', color
   const chosen = options.find(o => o.value === value);
   const groups = Array.from(new Set(options.map(o => o.group ?? '')));
   const row = height * 0.82;
+  const { height: winH } = useWindowDimensions();
+  // as tall as the list, but never past the bottom of the window (then it scrolls)
+  const listH = Math.min(row * Math.min(maxRows, options.length) + groups.length * 22 + 8, Math.max(160, winH - 160));
   const text = (s: string, size: number, c = t.text.dark) => (
     <Label size={size} color={c} edge={rgba('#ffffff', 0.5)} display={false} numberOfLines={1} style={{ textAlign: 'left', fontWeight: '800' }}>{s}</Label>
   );
@@ -64,11 +67,11 @@ export function Select({ options, value, onChange, placeholder = 'Select', color
           boxShadow: shadows(sk.lip(4, tone.lip), sk.drop(10, 18, 0.4), sk.line(0, '')),
         }}>
           <Texture name={sk.skin.texture} />
-          <ScrollView style={{ maxHeight: row * maxRows + groups.length * 22, borderRadius: sk.r(12), backgroundColor: t.panel.faceTop }}
+          <ScrollView showsVerticalScrollIndicator persistentScrollbar style={{ maxHeight: listH, borderRadius: sk.r(12), backgroundColor: t.panel.faceTop }}
             contentContainerStyle={{ padding: 4 }}>
             {groups.map(g => (
               <View key={g}>
-                {g ? <View style={{ paddingHorizontal: 10, paddingTop: 6, paddingBottom: 2 }}>{text(g.toUpperCase(), 11, darken(t.panel.face, 0.4))}</View> : null}
+                {g ? <View style={{ paddingHorizontal: 10, paddingTop: 6, paddingBottom: 2 }}>{text(g.toUpperCase(), 11, rgba(t.text.dark, 0.6))}</View> : null}
                 {options.filter(o => (o.group ?? '') === g).map(o => {
                   const on = o.value === value;
                   return (
