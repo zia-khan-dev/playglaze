@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0
+
+- **Type scale:** an optional theme `type` sets each kind of text (`title`, `button`, `number`, `label`, `body`): size scale, letter spacing, edge (`drop`, `outline`, `glow`, `none`) and display or body font. `Label` takes `textRole`; buttons, ribbons and counters set theirs.
+
 ## 0.5.0
 
 - Skins: `plate` sets the Ribbon title shape per skin (`cookie`, `plate`, `banner`); cartoon and minimal use `plate`.

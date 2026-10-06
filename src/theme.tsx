@@ -19,6 +19,21 @@ export type Theme = {
   fontFamily?: string;
   /** Font for the bold labels (buttons, ribbons, numbers). Falls back to fontFamily. */
   displayFont?: string;
+  /** Optional type scale: how each kind of text looks. Missing roles keep the defaults. */
+  type?: Partial<Record<TypeRole, TypeStyle>>;
+};
+
+/** The kinds of text: ribbon titles, button labels, counters and prices, other bold labels, and plain body text. */
+export type TypeRole = 'title' | 'button' | 'number' | 'label' | 'body';
+export type TypeStyle = {
+  /** Size multiplier (1 = the component's own size). */
+  scale?: number;
+  /** Letter spacing in points. */
+  spacing?: number;
+  /** The text edge: a drop edge under the text, an outline around it, a glow, or none. Default: the skin's. */
+  edge?: 'drop' | 'outline' | 'glow' | 'none';
+  /** Which font: the display font or the body font. Default: display, except body text. */
+  font?: 'display' | 'body';
 };
 
 export const bright: Theme = {

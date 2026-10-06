@@ -87,7 +87,7 @@ export function LevelSlot({ level, stars = 0, state = 'open', size = 88, color, 
                 </View>
               ) : (
                 <>
-                  <Label size={size * 0.34} color={t.text.dark} edge={rgba('#ffffff', 0.7)}>{level}</Label>
+                  <Label size={size * 0.34} color={t.text.dark} edge={rgba('#ffffff', 0.7)} textRole="number">{level}</Label>
                   <View style={{ marginTop: size * 0.04 }}><Stars count={stars} size={size * 0.2} /></View>
                 </>
               )}
@@ -120,7 +120,7 @@ export function CounterPill({ value, icon, onAdd, width = 130, style }: {
         height: h, borderRadius: sk.r(h / 2), backgroundColor: rgba(t.groove, 0.92), paddingLeft: h + 2, paddingRight: onAdd ? h : 10,
         justifyContent: 'center', boxShadow: shadows(sk.well(2, 3, '#000000', 0.5), sk.glint(1, 0.3), sk.line(0, '')),
       }}>
-        <Label size={17} edge={rgba('#000000', 0.45)}>{value}</Label>
+        <Label size={17} edge={rgba('#000000', 0.45)} textRole="number">{value}</Label>
       </View>
       {icon ? <View style={{ position: 'absolute', left: -4, top: 0 }}>{icon}</View> : null}
       {onAdd ? <RoundButton icon="plus" size={h - 2} color="green" onPress={onAdd} style={{ position: 'absolute', right: 0, top: 2 }} /> : null}
@@ -173,7 +173,7 @@ export function ShopTile({ children, price, priceIcon, onBuy, color = 'purple', 
       </View>
       <GlossButton size="sm" color={color} width={width * 0.86} onPress={onBuy} style={{ marginTop: -24 }}>
         {priceIcon}
-        <Label size={15}>{price}</Label>
+        <Label size={15} textRole="number">{price}</Label>
       </GlossButton>
       {badge ? <View style={{ position: 'absolute', top: -8, right: -6 }}>{badge}</View> : null}
     </View>

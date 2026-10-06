@@ -1,6 +1,6 @@
 {
   "name": "playglaze",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Glossy, chunky game UI for React Native and the web, drawn in code in any color.",
   "license": "MIT",
   "author": "Zia Khan",

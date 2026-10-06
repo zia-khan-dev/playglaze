@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, Text, TextProps, View, ViewStyle } from 'react-native';
 import Svg, { Polygon } from 'react-native-svg';
-import { useTheme } from './theme';
+import { TypeRole, useTheme } from './theme';
 import { useSkin } from './skin';
 
 /** Soft diagonal bands across a surface (the kit's candy stripes). The parent must clip (overflow hidden). */
@@ -49,22 +49,29 @@ export type LabelProps = TextProps & {
   edge?: string;
   /** Use the theme's display font (default true). */
   display?: boolean;
+  /** Which kind of text this is, for the theme's type scale (default label, or body when display is false). */
+  textRole?: TypeRole;
 };
 
 /** Bold game text: white with a thick darker edge under it. */
-export function Label({ size = 20, color, edge, display = true, style, ...rest }: LabelProps) {
+export function Label({ size: base = 20, color, edge, display = true, textRole, style, ...rest }: LabelProps) {
   const t = useTheme();
   const { skin } = useSkin();
-  const outline = skin.label !== 'edge';
-  const glow = skin.label === 'glow';
-  const font = display ? t.displayFont ?? t.fontFamily : t.fontFamily;
+  const ts = t.type?.[textRole ?? (display ? 'label' : 'body')];
+  const size = base * (ts?.scale ?? 1);
+  const kind = ts?.edge ?? (skin.label === 'glow' ? 'glow' : skin.label === 'edge' ? 'drop' : 'outline');
+  const outline = kind === 'outline';
+  const glow = kind === 'glow';
+  const useDisplay = ts?.font ? ts.font === 'display' : display;
+  const font = useDisplay ? t.displayFont ?? t.fontFamily : t.fontFamily;
   return (
     <Text
       allowFontScaling={false}
       {...rest}
       style={[{
         fontSize: size, color: color ?? t.text.color, fontFamily: font, fontWeight: font ? undefined : '900',
-        textShadowColor: glow ? skin.glow ?? edge ?? t.text.shadow : edge ?? t.text.shadow, textShadowOffset: { width: 0, height: outline ? 0 : Math.max(1.5, size * 0.09) },
+        letterSpacing: ts?.spacing,
+        textShadowColor: kind === 'none' ? 'transparent' : glow ? skin.glow ?? edge ?? t.text.shadow : edge ?? t.text.shadow, textShadowOffset: { width: 0, height: outline ? 0 : Math.max(1.5, size * 0.09) },
         textShadowRadius: glow ? Math.max(4, size * 0.35) : outline ? Math.max(1.5, size * 0.12) : Math.max(1, size * 0.06), includeFontPadding: false, textAlign: 'center',
       }, style]}
     />

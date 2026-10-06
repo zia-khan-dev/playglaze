@@ -76,7 +76,7 @@ export function Ribbon({ width, height = 56, title, children, color, filling, ti
         ) : null}
       </Svg>
       <View style={{ position: 'absolute', left: pad * 2, right: pad * 2, top: 0, height, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 8 }}>
-        {title ? <Label size={height * 0.42} color="#F4FAFF" edge={darken(cookie, 0.45)}>{title}</Label> : null}
+        {title ? <Label size={height * 0.42} color="#F4FAFF" edge={darken(cookie, 0.45)} textRole="title">{title}</Label> : null}
         {children}
       </View>
     </View>

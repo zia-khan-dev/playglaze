@@ -52,7 +52,7 @@ export function GlossButton({
           gloss={{ inset: Math.min(r * 0.45, box.w * 0.08) + 4, top: H * 0.08, height: H * 0.36, radius: Math.max(0, r - 4), strength: 0.42 }}
         >
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 8, paddingHorizontal: H * 0.3 }}>
-            {title ? <Label size={H * 0.4} edge={tone.lip}>{title}</Label> : null}
+            {title ? <Label size={H * 0.4} edge={tone.lip} textRole="button">{title}</Label> : null}
             {children}
           </View>
         </Surface>

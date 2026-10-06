@@ -192,7 +192,7 @@ export function DailyRewardDay({ day, children, amount, state = 'open', width = 
           ...sk.paint(`radial-gradient(circle at 50% 40%, #FFFFFF 0%, ${t.panel.faceTop} 55%, ${t.slot.face} 100%)`, t.panel.faceTop),
         }}>
           {children}
-          {amount !== undefined ? <Label size={15} color={t.text.dark} edge={rgba('#ffffff', 0.7)}>{amount}</Label> : null}
+          {amount !== undefined ? <Label size={15} color={t.text.dark} edge={rgba('#ffffff', 0.7)} textRole="number">{amount}</Label> : null}
         </View>
       </View>
       {state === 'claimed' ? (
@@ -267,7 +267,7 @@ export function QuestCard({ title, progress, total, reward, onClaim, color, styl
         </View>
       </View>
       <ProgressBar value={progress / total} color={done ? 'green' : color} height={20} groove={darken(t.slot.face, 0.08)}>
-        <Label size={13} edge={rgba('#000000', 0.45)}>{Math.min(progress, total)}/{total}</Label>
+        <Label size={13} edge={rgba('#000000', 0.45)} textRole="number">{Math.min(progress, total)}/{total}</Label>
       </ProgressBar>
     </View>
   );
@@ -301,7 +301,7 @@ export function LeaderboardRow({ rank, name, subtitle, score, avatar, me, style 
         <Label size={16} color={t.text.dark} edge={rgba('#ffffff', 0.7)} style={{ textAlign: 'left' }} numberOfLines={1}>{name}</Label>
         {subtitle ? <Label size={12} display={false} color={darken(t.panel.face, 0.45)} edge="transparent" style={{ textAlign: 'left' }}>{subtitle}</Label> : null}
       </View>
-      <Label size={18} color={t.text.dark} edge={rgba('#ffffff', 0.7)}>{score}</Label>
+      <Label size={18} color={t.text.dark} edge={rgba('#ffffff', 0.7)} textRole="number">{score}</Label>
     </View>
   );
 }
