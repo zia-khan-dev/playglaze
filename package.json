@@ -1,6 +1,6 @@
 {
   "name": "playglaze",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Glossy, chunky game UI for React Native and the web, drawn in code in any color.",
   "license": "MIT",
   "author": "Zia Khan",
@@ -48,13 +48,19 @@
   "peerDependencies": {
     "react": ">=18",
     "react-native": ">=0.77",
-    "react-native-svg": ">=15"
+    "react-native-svg": ">=15",
+    "three": ">=0.160"
+  },
+  "peerDependenciesMeta": {
+    "three": { "optional": true }
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
+    "@types/three": "^0.186.0",
     "react": "^19.2.3",
     "react-native": "^0.87.1",
     "react-native-svg": "^15.15.5",
+    "three": "^0.186.1",
     "typescript": "^5.9.3"
   }
 }

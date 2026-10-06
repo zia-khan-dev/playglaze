@@ -17,6 +17,9 @@ export default defineConfig({
       { find: /^playglaze$/, replacement: path.resolve(import.meta.dirname, '../src/index.ts') },
       { find: /^react-native$/, replacement: nm('react-native-web') },
       { find: /^react-native-svg$/, replacement: nm('react-native-svg/lib/module/ReactNativeSVG.web.js') },
+      // 3D skins load three.js from the docs' own dependencies (Vercel installs only this folder)
+      { find: /^three$/, replacement: nm('three/build/three.module.js') },
+      { find: /^three\/examples\/(.*)$/, replacement: nm('three/examples') + '/$1' },
       { find: /^react$/, replacement: nm('react') },
       { find: /^react\/(.*)$/, replacement: nm('react') + '/$1' },
       { find: /^react-dom$/, replacement: nm('react-dom') },

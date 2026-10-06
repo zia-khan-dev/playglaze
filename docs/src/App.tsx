@@ -59,9 +59,9 @@ const loadMode = (): Mode => {
 };
 setMode(loadMode());
 
-const cap = (k: string) => k[0].toUpperCase() + k.slice(1);
+const cap = (k: string) => (k.endsWith('3d') ? `3D ${cap(k.slice(0, -2))}` : k[0].toUpperCase() + k.slice(1));
 const SKIN_OPTIONS = [
-  ...Object.keys(FREE_SKINS).map(k => ({ value: k, label: cap(k), group: 'Free' })),
+  ...Object.keys(FREE_SKINS).map(k => ({ value: k, label: cap(k), group: 'Free', ...(k.endsWith('3d') ? { badge: '3D' } : {}) })),
   ...Object.keys(PRO).map(k => ({ value: k, label: cap(k), group: 'Pro', badge: 'PRO' })),
 ];
 
@@ -102,7 +102,7 @@ export default function App() {
             <Pressable onPress={() => setMenuOpen(o => !o)} style={{ padding: 8 }}><Text style={{ color: C.text, fontSize: 22 }}>☰</Text></Pressable>
           ) : null}
           <Pressable onPress={() => go('introduction')}><Ribbon width={wide ? 150 : 132} height={wide ? 42 : 38} title="PlayGlaze" tilt={-2} /></Pressable>
-          {wide ? <T size={13} color={C.faint} weight="700">v0.5.0</T> : null}
+          {wide ? <T size={13} color={C.faint} weight="700">v0.7.0</T> : null}
           <View style={{ flex: 1 }} />
           <Select options={SKIN_OPTIONS} value={skin} onChange={setSkin} width={wide ? 170 : 130} height={38} maxRows={SKIN_OPTIONS.length} />
           <RoundButton icon={mode === 'dark' ? 'sun' : 'moon'} size={38} color={mode === 'dark' ? 'yellow' : 'purple'} onPress={flipMode} />

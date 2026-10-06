@@ -43,6 +43,10 @@ export type Skin = {
   skew?: number;
   /** Colors that suit this skin (panels, ribbons, text). ThemeProvider applies them under your own theme. */
   theme?: Partial<Theme>;
+  /** 'three' renders button bodies as real 3D meshes with three.js (web; needs the optional `three` package). */
+  render?: 'css' | 'three';
+  /** The 3D material when render is 'three'. */
+  material?: 'plastic' | 'metal' | 'glass';
 };
 
 export const glossy: Skin = {

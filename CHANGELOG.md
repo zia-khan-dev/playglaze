@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0
+
+- **3D skins (three.js):** a skin with `render: 'three'` draws button bodies (GlossButton, RoundButton) as real 3D meshes — beveled slabs and spheres with lighting and reflections — through one shared offscreen renderer, cached per size and color. `material`: `plastic`, `metal` or `glass`. New free skin **toy3d**. `three` is an optional peer dependency, loaded only when a 3D skin is used; without WebGL (or on native for now) the CSS look is used.
+
 ## 0.6.0
 
 - **Type scale:** an optional theme `type` sets each kind of text (`title`, `button`, `number`, `label`, `body`): size scale, letter spacing, edge (`drop`, `outline`, `glow`, `none`) and display or body font. `Label` takes `textRole`; buttons, ribbons and counters set theirs.

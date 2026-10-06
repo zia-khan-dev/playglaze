@@ -2,6 +2,7 @@
 // It takes its material from the current skin, so buttons never draw their own gradients or shadows.
 import React from 'react';
 import { LayoutChangeEvent, StyleProp, View, ViewStyle } from 'react-native';
+import { useBody3D } from './useBody3D';
 import { rgba, Tone } from './color';
 import { Gloss, Stripes } from './parts';
 import { shadows, useSkin } from './skin';
@@ -44,8 +45,29 @@ export function Surface({
   const fill = shape === 'radial'
     ? `radial-gradient(circle at 50% 30%, ${tone.top} 0%, ${tone.base} 55%, ${tone.dark} 100%)`
     : `linear-gradient(180deg, ${tone.top} 0%, ${tone.base} 48%, ${tone.dark} 100%)`;
-  const w = width ?? faceWidth ?? 0;
+  const [measured, setMeasured] = React.useState(0);
+  const w = width ?? faceWidth ?? measured;
   const skew = shape === 'linear' ? sk.skin.skew ?? 0 : 0;
+  // 3D skins: the whole body (face + lip) is one rendered image; until it is ready the CSS look shows.
+  const img = useBody3D(sk.skin.render === 'three' && w > 0
+    ? { w, h: H, r, lip, shape, pressed, base: tone.base, lipColor: tone.lip, material: sk.skin.material ?? 'plastic' }
+    : null);
+  if (img) {
+    return (
+      <View style={{ flex: 1 }}>
+        <View pointerEvents="none" style={{
+          position: 'absolute', left: 0, right: width == null ? 0 : undefined, width, top: 0, height: H + lip,
+          backgroundImage: `url(${img})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat',
+          filter: sk.skin.drop === 'none' ? undefined : `drop-shadow(0 ${Math.max(2, lip0 * drop[0])}px ${Math.max(3, lip0 * drop[1])}px rgba(0,0,0,0.3))`,
+        } as any} />
+        <View onLayout={e => { onFaceLayout?.(e); setMeasured(e.nativeEvent.layout.width); }} style={[{
+          position: 'absolute', left: 0, right: width == null ? 0 : undefined, width, top: pressed ? lip : 0, height: H, borderRadius: r, overflow: 'hidden',
+        }, faceStyle, { backgroundColor: 'transparent', backgroundImage: undefined, boxShadow: undefined } as any]}>
+          {children}
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={{ flex: 1, transform: skew ? [{ skewX: `${-skew}deg` }] : undefined }}>
       {/* lip + drop shadow */}
@@ -54,7 +76,7 @@ export function Surface({
         backgroundColor: tone.lip, boxShadow: shadows(sk.drop(lip0 * drop[0], lip0 * drop[1], 0.32), sk.line(0, '')), opacity: pressed ? 0 : 1,
       }} />
       {/* face */}
-      <View onLayout={onFaceLayout} style={[{
+      <View onLayout={e => { onFaceLayout?.(e); setMeasured(e.nativeEvent.layout.width); }} style={[{
         position: 'absolute', left: 0, right: width == null ? 0 : undefined, width, top: pressed ? lip : 0, height: H, borderRadius: r, overflow: 'hidden',
         ...sk.paint(fill, tone.base),
         boxShadow: shadows(sk.shine(shine[0], shine[1]), sk.shade(shade[0], tone.lip, shade[1]), sk.line(line[0], rgba(tone.lip, line[1]))),
